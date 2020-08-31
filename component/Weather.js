@@ -3,10 +3,12 @@ import { Text, ImageBackground, StyleSheet } from 'react-native'
 import Forecast from './Forecast'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
-export default function Weather(props){ 
+export default function Weather(props){  
+   
     const [forecastInfo, setForecastInfo] = useState({
         main: 'Main',
         description: 'Description',
+        pressure: 'asdasd',
         temp: 0
         }) 
         
@@ -18,6 +20,10 @@ export default function Weather(props){
         .then((json) => {
             setForecastInfo({
                 main: json.weather[0].main,
+                pressure: json.main.pressure,
+                name: json.name,
+                wind: json.wind,
+                feels_like: json.main.feels_like,
                 description: json.weather[0].description,
                 temp: json.main.temp});
             })
@@ -26,10 +32,10 @@ export default function Weather(props){
         });
         }
         }, [props.zipCode])
-   
+  
     
     return (
-        <ImageBackground source={require('../bg.jpg')} style={styles.backdrop}>
+        <ImageBackground source={require("../img/thailand.webp")} style={styles.backdrop}>
             <Text>Zip Code is {props.zipCode}</Text>
             <Forecast {...forecastInfo}/>
         </ImageBackground>
@@ -39,11 +45,13 @@ export default function Weather(props){
 const styles = StyleSheet.create({
     backdrop: {
        
-        fontSize: 25,
+        fontSize: 45,
         textAlign: 'center',
         flexDirection: 'column',
         alignItems: 'center',
         width: '100%',
-        height: '100%'
-    }
+        height: '100%',
+        opacity: 0.75,
+    },
+    
 })
